@@ -1,0 +1,32 @@
+select ?rid ?bo ?zh where {
+	{
+		?rid  bdo:isRoot true ;
+		      a bdo:Instance ;
+		      bdo:instanceHasReproduction ?rep .
+		?rep a bdo:ImageInstance .
+		?adm adm:adminAbout ?rep ;
+			 adm:metadataLegal bda:LD_BDRC_CC0 ;
+		     adm:status bda:StatusReleased ;
+		     adm:restrictedInChina false ;
+		     adm:access bda:AccessOpen ;
+		     .
+		?rid skos:prefLabel ?bo .
+		FILTER(lang(?bo) = "bo-x-ewts")
+		FILTER (NOT EXISTS{?rid skos:prefLabel ?bo . FILTER(lang(?bo) = "bo-x-ewts")})
+	} union {
+		?rid  bdo:isRoot true ;
+		      a bdo:Instance ;
+		      bdo:instanceHasReproduction ?rep .
+		?rep a bdo:ImageInstance .
+		?adm adm:adminAbout ?rep ;
+			 adm:metadataLegal bda:LD_BDRC_CC0 ;
+		     adm:status bda:StatusReleased ;
+		     adm:restrictedInChina false ;
+		     adm:access bda:AccessOpen ;
+		     .
+		?rid skos:prefLabel ?bo .
+		FILTER(lang(?bo) = "bo-x-ewts")
+		?rid skos:prefLabel ?zh .
+		FILTER ( lang(?zh) = "zh-hans" || lang(?zh) = "zh-hant" || lang(?zh) = "zh-latn-pinyin" )
+	}
+} limit 25
